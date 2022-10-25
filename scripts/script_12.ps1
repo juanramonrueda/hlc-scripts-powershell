@@ -14,4 +14,4 @@ else {
 
 # ------------------------------------------------------------------------------------------------
 # Se obtienen los nombres de los ficheros .txt que hay en la raíz del sistema operativo
-Get-ChildItem -Path C:\*.txt > ..\pruebas_scripts\fichero_script_12.txt
+Get-ChildItem -Name -Path C:\*.txt > ..\pruebas_scripts\fichero_script_12.txt
