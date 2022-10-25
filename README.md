@@ -26,3 +26,5 @@
 **10.- Obtener en un fichero la lista comandos cuyo nombre es Process.**
 
 **11.- Obtener en un fichero la lista de variables del sistema y sus contenidos. (sobre Windows 2012 Server Gráfico)**
+
+**12.- Obtener en un fichero el nombre de todos los ficheros con extensión .txt que se encuentre en toda la estructura de directorios de disco C:**
