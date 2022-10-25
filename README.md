@@ -24,3 +24,5 @@
 **9.- Obtener en un fichero la lista de comandos cuyo verbo sea Set.**
 
 **10.- Obtener en un fichero la lista comandos cuyo nombre es Process.**
+
+**11.- Obtener en un fichero la lista de variables del sistema y sus contenidos. (sobre Windows 2012 Server Gráfico)**
