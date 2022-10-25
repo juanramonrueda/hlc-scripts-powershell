@@ -28,3 +28,6 @@
 **11.- Obtener en un fichero la lista de variables del sistema y sus contenidos. (sobre Windows 2012 Server Gráfico)**
 
 **12.- Obtener en un fichero el nombre de todos los ficheros con extensión .txt que se encuentre en toda la estructura de directorios de disco C:**
+
+**13.- Presentar en forma de lista los archivos de c:\windows\sytem32 que sean ejecutables (exe, com), mostrando el nombre, tamaño, extensión y si es de solo lectura.**
+
