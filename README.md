@@ -22,3 +22,5 @@
 **8.- Pedir una palabra por teclado e indicar cual es la primera vocal que aparece y en qué posición.**
 
 **9.- Obtener en un fichero la lista de comandos cuyo verbo sea Set.**
+
+**10.- Obtener en un fichero la lista comandos cuyo nombre es Process.**
