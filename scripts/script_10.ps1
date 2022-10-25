@@ -9,6 +9,7 @@ if (Test-Path ..\pruebas_scripts) {
 }
 else {
     New-Item -Path ..\pruebas_scripts -ItemType Directory
+    Write-Host 'Directorio creado'
 }
 
 # ------------------------------------------------------------------------------------------------
