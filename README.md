@@ -35,3 +35,4 @@
     a) Con salida por pantalla
     b) Con salida por fichero si recibe como argumento el nombre que queremos dar al fichero, tendrá la extensión *.txt
 
+**15.- Obtener un listado a tres columnas de los archivos de C:\Windows y sus subdirectorios que tengan tamaño mayor de 2MB y la fecha de último acceso esté en los últimos 7 días. Obtener el resultado de la ejecución de este script en un fichero si se le pasa como argumento. Si no hay argumentos, la salida será por pantalla.**
