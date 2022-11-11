@@ -1,5 +1,6 @@
 # scripts-powershell-aso
-## Scripts de PowerShell de módulo ASO
+
+## Ejercicios de scripts de PowerShell del módulo de ASO
 
 **1. Realiza un script que pregunte al usuario cual es su nombre y muestre por pantalla el siguiente mensaje: “Hola Pepe” (En el caso de que el nombre sea Pepe.**
 
@@ -36,3 +37,4 @@
     b) Con salida por fichero si recibe como argumento el nombre que queremos dar al fichero, tendrá la extensión *.txt
 
 **15.- Obtener un listado a tres columnas de los archivos de C:\Windows y sus subdirectorios que tengan tamaño mayor de 2MB y la fecha de último acceso esté en los últimos 7 días. Obtener el resultado de la ejecución de este script en un fichero si se le pasa como argumento. Si no hay argumentos, la salida será por pantalla.**
+
