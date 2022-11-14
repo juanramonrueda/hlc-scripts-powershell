@@ -17,13 +17,13 @@ if ($null -eq $parametro1) {
 
 } else {
     
-    if (Test-Path ..\pruebas_scripts) {
+    if (Test-Path C:\pruebas_scripts) {
         Write-Host 'Directorio creado anteriormente'
     }
     else {
-        New-Item -Path ..\pruebas_scripts -ItemType Directory
+        New-Item -Path C:\pruebas_scripts -ItemType Directory
         Write-Host 'Directorio creado'
     }
 
-    tamaño_acceso_directorios > ..\pruebas_scripts\$parametro1.txt
+    tamaño_acceso_directorios > C:\pruebas_scripts\$parametro1.txt
 }
