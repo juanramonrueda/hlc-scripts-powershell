@@ -1,34 +1,48 @@
-# ----------------------------------------------------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------------------------------------------------------
 # Limpieza de pantalla
-Clear-Host
+Invoke-Expression .\clear_display.ps1
 
-# ----------------------------------------------------------------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------------------------------------------------------------
 # Declaración de array con los meses del año
-$nombre_mes = 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+$month_name = 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
 
-# ----------------------------------------------------------------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------------------------------------------------------------
 # Petición de un mes mediante número y almacenamiento en variable
-$numero_mes = Read-Host 'Introduce un numero del 1 al 12'
-
-# ----------------------------------------------------------------------------------------------------------------------------------
-# Comparación de la petición del usuario
-switch ($numero_mes) {
-    1 { $resultado = $nombre_mes[0] }
-    2 { $resultado = $nombre_mes[1] }
-    3 { $resultado = $nombre_mes[2] }
-    4 { $resultado = $nombre_mes[3] }
-    5 { $resultado = $nombre_mes[4] }
-    6 { $resultado = $nombre_mes[5] }
-    7 { $resultado = $nombre_mes[6] }
-    8 { $resultado = $nombre_mes[7] }
-    9 { $resultado = $nombre_mes[8] }
-    10 { $resultado = $nombre_mes[9] }
-    11 { $resultado = $nombre_mes[10] }
-    12 { $resultado = $nombre_mes[11] }
-
-    Default {$resultado = 'Valor equivocado'}
+function read_month_number {
+    $script:month_number = Read-Host 'Introduce un numero del 1 al 12'
 }
 
-# ----------------------------------------------------------------------------------------------------------------------------------
-# Muestra por pantalla el resultado del switch
-Write-Host 'Es el mes' $resultado
+
+#-----------------------------------------------------------------------------------------------------------------------------------
+# Comparación de la petición del usuario
+function main_s_2 {
+    read_month_number
+
+    switch ($month_number) {
+        1 { $result = $month_name[0] }
+        2 { $result = $month_name[1] }
+        3 { $result = $month_name[2] }
+        4 { $result = $month_name[3] }
+        5 { $result = $month_name[4] }
+        6 { $result = $month_name[5] }
+        7 { $result = $month_name[6] }
+        8 { $result = $month_name[7] }
+        9 { $result = $month_name[8] }
+        10 { $result = $month_name[9] }
+        11 { $result = $month_name[10] }
+        12 { $result = $month_name[11] }
+    
+        Default {$result = 'Valor equivocado'}
+    }
+
+    return $result
+}
+
+
+#-----------------------------------------------------------------------------------------------------------------------------------
+# Ejecución de la función principal "main"
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_2
+}
