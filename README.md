@@ -39,3 +39,13 @@
 **15.- Obtener un listado a tres columnas de los archivos de C:\Windows y sus subdirectorios que tengan tamaño mayor de 2MB y la fecha de último acceso esté en los últimos 7 días. Obtener el resultado de la ejecución de este script en un fichero si se le pasa como argumento. Si no hay argumentos, la salida será por pantalla.**
 
 **16.- Obtener un listado en formato CSV de los procesos que se están ejecutando en la máquina ordenados de forma descendente por el consumo de procesador. Posteriormente abrir el fichero generado desde una aplicación de hoja de calculo (excel o similar) y realizar captura de pantalla. Para este ejercicio se entregarán ambos ficheros: csv y captura de pantalla.**
+
+**17.- Crear un fichero desde el script y que contenga la siguiente información:**
+
+    a) Fecha y hora del sistema
+    b) Nombre y apellidos
+    c) Variables del sistema
+    d) Procesos en ejecución
+    e) Usuarios conectados en el sistema
+    f) Información de configuración de la red ip, mask, interfaces
+    g) Información de la tabla de enrutado
