@@ -29,7 +29,6 @@ function main {
     
         get_commands_set
     }
-    
 }
 
 
