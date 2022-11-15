@@ -1,26 +1,35 @@
-# -------------------------------------------------------------------
+#--------------------------------------------------------------------
 # Limpieza de pantalla
-Clear-Host
+Invoke-Expression .\clear_display.ps1
 
-# -------------------------------------------------------------------
+$script:parametro_1_s_3 = $Args[0]
+
+#--------------------------------------------------------------------
 # Comparación de la petición del usuario que se guarda en variable
-switch ($Args[0]) {
-    1 { $resultado = 'Enero' }
-    2 { $resultado = 'Febrero' }
-    3 { $resultado = 'Marzo' }
-    4 { $resultado = 'Abril' }
-    5 { $resultado = 'Mayo' }
-    6 { $resultado = 'Junio' }
-    7 { $resultado = 'Julio' }
-    8 { $resultado = 'Agosto' }
-    9 { $resultado = 'Septiembre' }
-    10 { $resultado = 'Octubre' }
-    11 { $resultado = 'Noviembre' }
-    12 { $resultado = 'Diciembre' }
-
-    Default {$resultado = 'Valor equivocado'}
+function main_s_3 {
+    switch ($parametro_1_s_3) {
+        1 { $result = 'Enero' }
+        2 { $result = 'Febrero' }
+        3 { $result = 'Marzo' }
+        4 { $result = 'Abril' }
+        5 { $result = 'Mayo' }
+        6 { $result = 'Junio' }
+        7 { $result = 'Julio' }
+        8 { $result = 'Agosto' }
+        9 { $result = 'Septiembre' }
+        10 { $result = 'Octubre' }
+        11 { $result = 'Noviembre' }
+        12 { $result = 'Diciembre' }
+    
+        Default {$result = 'Valor equivocado'}
+    }
+    
+    return $result
 }
 
-# -------------------------------------------------------------------
-# Se muestra por pantalla el resultado del switch
-Write-Host 'Es el mes' $resultado
+
+#--------------------------------------------------------------------
+# Ejecución de la función principal "main"
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_3
+}

@@ -1,11 +1,22 @@
-# ----------------------------------------------------------
+#-----------------------------------------------------------------------------
 # Limpieza de pantalla
-Clear-Host
+Invoke-Expression .\clear_display.ps1
 
-# ----------------------------------------------------------
-# Realización de la suma de los argumentos pasados
-$suma = $Args[0] + $Args[1] + $Args[2]
 
-# ----------------------------------------------------------
-# Se muestra por pantalla el resultado de la suma anterior
-Write-Host 'La suma es' $suma
+#-----------------------------------------------------------------------------
+# Definición en variables de los argumentos pasados
+$script:suma = $Args[0] + $Args[1] + $Args[2]
+
+
+#-----------------------------------------------------------------------------
+# Se muestra por pantalla el resultado de la suma según los parámetros dados
+function main_s_4 {
+
+    Write-Host 'La suma es' $suma
+}
+
+
+#-----------------------------------------------------------------------------
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_4
+}

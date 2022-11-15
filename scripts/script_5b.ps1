@@ -1,18 +1,35 @@
-# ---------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------
 # Limpieza de pantalla
-Clear-Host
+Invoke-Expression .\clear_display.ps1
 
-# ---------------------------------------------------------------------------------
+
+#------------------------------------------------------------------------------------
+# Definición de los argumentos a variables
+$script:variable_1 = $Args[0]
+
+$script:variable_2 = $Args[1]
+
+
+#------------------------------------------------------------------------------------
 # Comparación de los argumentos pasados para comparar qué número es mayor
+function main_s_5b {
+    if ($variable_1 -gt $variable_2) {
+        $resultado = 'El numero ' + $variable_1 + ' es mayor que el numero ' + $variable_2
+    }
+    
+    elseif ($variable_1 -lt $variable_2) {
+        $resultado = 'El numero ' + $variable_2 + ' es mayor que el numero ' + $variable_1
+    }
+    
+    else {
+        $resultado = 'Los numeros son iguales'
+    }
 
-if ($Args[0] -gt $Args[1]) {
-    $resultado = 'El numero ' + $Args[0] + ' es mayor que el numero ' + $Args[1]
-} elseif ($Args[0] -lt $Args[1]) {
-    $resultado = 'El numero ' + $Args[1] + ' es mayor que el numero ' + $Args[0]
-} else {
-    $resultado = 'Los numeros son iguales'
+    return $resultado
 }
 
-# ---------------------------------------------------------------------------------
-# Se muestra por pantalla el resultado de la comparación
-Write-Host $resultado
+#------------------------------------------------------------------------------------
+# Ejecución de la función principal "main"
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_5b
+}
