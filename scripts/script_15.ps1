@@ -12,9 +12,9 @@ function min_length_max_lastAccessTime {
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # Comprobación de que el script recibe o no parámetros
 function main {
-    if ($null -eq $parametro1) {
+    `$parametro1 = $parametro1
 
-        `$parametro1 = $parametro1
+    if ($null -eq $parametro1) {
         
         min_length_max_lastAccessTime
     
