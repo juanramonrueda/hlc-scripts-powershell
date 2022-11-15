@@ -7,7 +7,7 @@ function csv_export_processes {
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # Función para comprobación de si existe un directorio para almacenar los scripts y creación del mismo si no existe
-function main {
+function main_s_16 {
     Invoke-Expression .\clear_display.ps1
 
     if (Test-Path C:\pruebas_scripts) {
@@ -25,5 +25,5 @@ function main {
 #-------------------------------------------------------------------------------------------------------------------------------------
 # Ejecución de la función principal "main"
 if ($MyInvocation.InvocationName -ne '&') {
-    main
+    main_s_16
 }

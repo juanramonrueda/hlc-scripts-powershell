@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------------------------------------------------------------------------------
 # Conversión de un argumento a variable
-$parametro1=$Args[0]
+$script:parametro1=$Args[0]
 
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -12,9 +12,7 @@ function list_windows_group_extension {
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------
 # Comprobación si hay parámetro dado al script, si recibe un parámetro, creará un .txt con el nombre del parámetro dado
-function main {
-    `$parametro1 = $parametro1
-
+function main_s_14 {
     Invoke-Expression .\clear_display.ps1
 
     if ($null -eq $parametro1) {
@@ -38,5 +36,5 @@ function main {
 
 #-------------------------------------------------------------------------------------------------------------------------------------------------------
 if ($MyInvocation.InvocationName -ne '&') {
-    main
+    main_s_14
 }

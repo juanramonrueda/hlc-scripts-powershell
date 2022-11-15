@@ -1,6 +1,6 @@
 #-------------------------------------------------------------------------------------------------
 # Creación de un directorio para almacenar los archivos relacionados con los scripts si no existe
-function main {
+function main_s_12 {
     Invoke-Expression .\clear_display.ps1
 
     if (Test-Path C:\pruebas_scripts) {
@@ -26,5 +26,5 @@ function list_disk_c {
 #-------------------------------------------------------------------------------------------------
 # Ejecución del programa principal "main"
 if ($MyInvocation.InvocationName -ne '&') {
-    main
+    main_s_12
 }

@@ -7,7 +7,7 @@ function get_command_process {
 
 #-----------------------------------------------------------------------------------------------------------
 # Creación de un directorio para almacenar los archivos relacionados con los scripts si no existe
-function main {
+function main_s_10 {
     Invoke-Expression .\clear_display.ps1
 
     if (Test-Path C:\pruebas_scripts) {
@@ -26,5 +26,5 @@ function main {
 #-----------------------------------------------------------------------------------------------------------
 # Ejecución de la función principal "main"
 if ($MyInvocation.InvocationName -ne '&') {
-    main
+    main_s_10
 }
