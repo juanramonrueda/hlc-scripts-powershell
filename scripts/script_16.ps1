@@ -1,13 +1,15 @@
 #-------------------------------------------------------------------------------------------------------------------------------------
 # Definición de función para exportar los procesos ordenados por uso de CPU a un fichero .csv
-function exportar_procesos_csv {
+function csv_export_processes {
     Get-Process | Sort-Object -Property CPU -Descending | Export-Csv -Path C:\pruebas_scripts\procesos_cpu_descen.csv -Delimiter ';'
 }
 
 
 #-------------------------------------------------------------------------------------------------------------------------------------
 # Función para comprobación de si existe un directorio para almacenar los scripts y creación del mismo si no existe
-function comprobar_directorio {
+function main {
+    Invoke-Expression .\clear_display.ps1
+
     if (Test-Path C:\pruebas_scripts) {
         Write-Host 'El directorio existe'
         
@@ -15,11 +17,13 @@ function comprobar_directorio {
         New-Item -Path C:\pruebas_scripts -ItemType Directory
         Write-Host 'Directorio creado'
     }
+
+    csv_export_processes
 }
 
 
 #-------------------------------------------------------------------------------------------------------------------------------------
-# Ejecución de las funciones de forma ordenada
-comprobar_directorio
-
-exportar_procesos_csv
+# Ejecución de la función principal "main"
+if ($MyInvocation.InvocationName -ne '&') {
+    main
+}
