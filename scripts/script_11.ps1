@@ -18,7 +18,7 @@ function main_s_11 {
     Invoke-Expression .\clear_display.ps1
 
     if (Test-Path $dir_path) {
-        Write-Host 'El directorio' $dir_path "está creado"
+        Write-Host 'El directorio' $dir_path "esta creado"
     }
     
     else {

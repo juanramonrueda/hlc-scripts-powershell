@@ -21,7 +21,7 @@ function main_s_15 {
     } else {
         
         if (Test-Path $dir_path) {
-            Write-Host 'El directorio' $dir_path "está creado"
+            Write-Host 'El directorio' $dir_path "esta creado"
         }
         
         else {
