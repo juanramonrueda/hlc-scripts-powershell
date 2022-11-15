@@ -1,6 +1,8 @@
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# Conversión de un argumento a variable
+# Definición de variables
 $script:parametro1=$Args[0]
+
+$script:dir_path = "C:\pruebas_scripts"
 
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -18,15 +20,16 @@ function main_s_15 {
     
     } else {
         
-        if (Test-Path C:\pruebas_scripts) {
-            Write-Host 'Directorio creado anteriormente'
+        if (Test-Path $dir_path) {
+            Write-Host 'El directorio' $dir_path "está creado"
         }
+        
         else {
-            New-Item -Path C:\pruebas_scripts -ItemType Directory
-            Write-Host 'Directorio creado'
+            New-Item -Path $dir_path -ItemType Directory
+            Write-Host 'Se ha creado el directorio' $dir_path
         }
     
-        min_length_max_lastAccessTime > C:\pruebas_scripts\$parametro1.txt
+        min_length_max_lastAccessTime > $dir_path\$parametro1.txt
     }
 }
 

@@ -1,7 +1,14 @@
 #---------------------------------------------------------------------------------------------------
+# Definición de variables
+$script:dir_path = "C:\pruebas_scripts"
+
+$script:file = "fichero_script_11.txt"
+
+
+#---------------------------------------------------------------------------------------------------
 # Se muestran las variables del sistema
 function system_vars {
-    Get-ChildItem Env: > C:\pruebas_scripts\fichero_script_11.txt
+    Get-ChildItem Env: > $dir_path\$file
 }
 
 
@@ -10,13 +17,13 @@ function system_vars {
 function main_s_11 {
     Invoke-Expression .\clear_display.ps1
 
-    if (Test-Path C:\pruebas_scripts) {
-        Write-Host 'Directorio creado anteriormente'
+    if (Test-Path $dir_path) {
+        Write-Host 'El directorio' $dir_path "está creado"
     }
     
     else {
-        New-Item -Path C:\pruebas_scripts -ItemType Directory
-        Write-Host 'Directorio creado'
+        New-Item -Path $dir_path -ItemType Directory
+        Write-Host 'Se ha creado el directorio' $dir_path
     }
 
     system_vars

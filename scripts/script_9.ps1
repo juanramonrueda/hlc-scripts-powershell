@@ -1,7 +1,14 @@
 #--------------------------------------------------------------------------------------------------------
+# Definición de variables
+$script:dir_path = "C:\pruebas_scripts"
+
+$script:file = "fichero_script_9.txt"
+
+
+#--------------------------------------------------------------------------------------------------------
 # Ejecución del comanado para guardar en un fichero todos los comandos que tengan el verbo set
 function get_commands_set {
-    Get-Command -verb set | Select-Object -Property Name > C:\pruebas_scripts\fichero_script_9.txt
+    Get-Command -verb set | Select-Object -Property Name > $dir_path\$file
 }
 
 
@@ -10,13 +17,13 @@ function get_commands_set {
 function main_s_9 {
     Invoke-Expression .\clear_display.ps1
 
-    if (Test-Path C:\pruebas_scripts) {
-        Write-Host 'Directorio creado anteriormente'
+    if (Test-Path $dir_path) {
+        Write-Host 'El directorio' $dir_path "está creado"
     }
     
     else {
-        New-Item -Path C:\pruebas_scripts -ItemType Directory
-        Write-Host 'Directorio creado'
+        New-Item -Path $dir_path -ItemType Directory
+        Write-Host 'Se ha creado el directorio' $dir_path
     }
 
     get_commands_set
