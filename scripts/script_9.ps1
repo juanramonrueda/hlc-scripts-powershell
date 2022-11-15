@@ -8,7 +8,7 @@ function get_commands_set {
 #--------------------------------------------------------------------------------------------------------
 # Función para crear un directorio para almacenar los archivos relacionados con los scripts si no existe
 function main {
-    clear_display
+    Invoke-Expression .\clear_display.ps1
 
     if (Test-Path C:\pruebas_scripts) {
         Write-Host 'Directorio creado anteriormente'
