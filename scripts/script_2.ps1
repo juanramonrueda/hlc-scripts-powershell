@@ -5,7 +5,7 @@ Invoke-Expression .\clear_display.ps1
 
 #-----------------------------------------------------------------------------------------------------------------------------------
 # Declaración de array con los meses del año
-$month_name = 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+$script:month_name = 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
 
 
 #-----------------------------------------------------------------------------------------------------------------------------------
