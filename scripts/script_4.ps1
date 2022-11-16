@@ -17,6 +17,7 @@ function main_s_4 {
 
 
 #-----------------------------------------------------------------------------
+# Ejecución de la función principal "main"
 if ($MyInvocation.InvocationName -ne '&') {
     main_s_4
 }
