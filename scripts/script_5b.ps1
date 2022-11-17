@@ -13,24 +13,36 @@ $script:variable_2 = $Args[1]
 #--------------------------------------------------------------------------------------------
 # Comparación de los argumentos pasados para comparar qué número es mayor
 function main_s_5b {
-    if ($variable_1 -gt $variable_2) {
-        $resultado = 'El numero ' + $variable_1 + ' es mayor que el numero ' + $variable_2
+    
+    if ($variable_1 -isnot [int]) {
+        $resultado = 'El primer argumento pasado es una cadena de texto o contiene letras' 
     }
     
-    elseif ($variable_1 -lt $variable_2) {
-        $resultado = 'El numero ' + $variable_2 + ' es mayor que el numero ' + $variable_1
+    elseif ($variable_2 -isnot [int]) {
+        $resultado = 'El segundo argumento pasado es una cadena de texto o contiene letras'
     }
-    
-    elseif ($variable_1 -eq $variable_2) {
-        $resultado = 'Los numeros son iguales'
+
+    elseif (($variable_1 -is [int]) -and ($variable_2 -is [int])) {
+        if ($variable_1 -gt $variable_2) {
+            $resultado = 'El numero ' + $variable_1 + ' es mayor que el numero ' + $variable_2
+        }
+        
+        elseif ($variable_1 -lt $variable_2) {
+            $resultado = 'El numero ' + $variable_2 + ' es mayor que el numero ' + $variable_1
+        }
+        
+        else {
+            $resultado = 'Los numeros son iguales'
+        }
     }
 
     else {
-        $resultado = 'Ha introducido texto, por lo que no se puede hacer la comparación'
+        $resultado = 'Ambos argumentos son cadenas de texto o contienen letras'
     }
 
     return $resultado
 }
+
 
 #--------------------------------------------------------------------------------------------
 # Ejecución de la función principal "main"
