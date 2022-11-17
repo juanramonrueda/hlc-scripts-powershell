@@ -1,8 +1,10 @@
 #--------------------------------------------------------------------------------
 # Definición de variables
-$script:dir_path = "C:\pruebas_scripts"
-
 $script:file = "fichero_script_17.txt"
+
+$script:first_name = "Juan Ramon"
+
+$script:last_name = "Rueda Lao"
 
 
 #--------------------------------------------------------------------------------
@@ -15,10 +17,6 @@ function show_date_hour {
 #--------------------------------------------------------------------------------
 # Mostrar nombre y apellidos
 function first_last_name {
-    $first_name = "Juan Ramon"
-
-    $last_name = "Rueda Lao"
-
     $full_name = "$first_name $last_name"
 
     $full_name
@@ -60,18 +58,6 @@ function routing_table {
 }
 
 
-
-function create_directory_if_not_exists {
-    if (Test-Path $dir_path) {
-        Write-Host 'El directorio' $dir_path "esta creado"
-    }
-    
-    else {
-        New-Item -Path $dir_path -ItemType Directory
-        Write-Host 'Se ha creado el directorio' $dir_path
-    }
-}
-
 #--------------------------------------------------------------------------------
 # Función principal
 function main_s_17 {
@@ -94,7 +80,7 @@ function main_s_17 {
 #--------------------------------------------------------------------------------
 # Ejecución de la función principal "main" y la función de chequeo de directorio
 if ($MyInvocation.InvocationName -ne '&') {
-    create_directory_if_not_exists
+    Invoke-Expression .\create_directory.ps1
 
     main_s_17 > $dir_path\$file
 }

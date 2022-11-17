@@ -1,28 +1,12 @@
 #-----------------------------------------------------------------------------------------------------------
-# Definición de variables
-$script:dir_path = "C:\pruebas_scripts"
-
+# Definición de variable
 $script:file = "fichero_script_10.txt"
 
 
 #-----------------------------------------------------------------------------------------------------------
-# Ejecución del comando para guardar en un fichero los comandos que empiezen por Process
-function create_directory {
-    if (Test-Path $dir_path) {
-        Write-Host 'El directorio' $dir_path "esta creado"
-    }
-    
-    else {
-        New-Item -Path $dir_path -ItemType Directory
-        Write-Host 'Se ha creado el directorio' $dir_path
-    }
-}
-
-
-#-----------------------------------------------------------------------------------------------------------
-# Creación de un directorio para almacenar los archivos relacionados con los scripts si no existe
+# Listado de los cmdlet que tienen el nombre Process
 function main_s_10 {
-    create_directory
+    Invoke-Expression .\create_directory.ps1
 
     Get-Command -Name *-Process* | Select-Object -Property Name > $dir_path\$file
 }

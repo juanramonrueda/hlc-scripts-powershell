@@ -29,7 +29,7 @@
 
 **13.- Presentar en forma de lista los archivos de c:\windows\sytem32 que sean ejecutables (exe, com), mostrando el nombre, tamaño, extensión y si es de solo lectura.**
 
-**14.- Listar en forma de tabla el número de archivos de cada tipo de extensión que hay en el directorio c:\windows\sytem32 , ordenados por la extensión.**
+**14.- Listar en forma de tabla el número de archivos de cada tipo de extensión que hay en el directorio C:\windows\sytem32, ordenados por la extensión.**
 
     a) Con salida por pantalla
     b) Con salida por fichero si recibe como argumento el nombre que queremos dar al fichero, tendrá la extensión *.txt

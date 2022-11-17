@@ -4,7 +4,7 @@ Invoke-Expression .\clear_display.ps1
 
 
 #-----------------------------------------------------------------------------------
-# Petición de los números al usuario en el script
+# Petición de los números al usuario en el script y comprobación de los números
 function ask_numbers {
     [int]$script:numero_1 = Read-Host 'Introduzca el primer numero'
 

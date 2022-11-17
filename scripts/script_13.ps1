@@ -2,7 +2,7 @@
 # Definición de variables
 $script:execute_files = 'C:\Windows\System32\*'
 
-$script:files_extension = '*.exe', '*.com'
+$script:files_extensions = '*.exe', '*.com'
 
 
 #--------------------------------------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ $script:files_extension = '*.exe', '*.com'
 function main_s_13 {
     Invoke-Expression .\clear_display.ps1
 
-    Get-ChildItem -Path $execute_files -Include ($files_extension) | Select-Object Name,Mode,Length
+    Get-ChildItem -Path $execute_files -Include ($files_extensions) | Select-Object Name,Mode,Length
 }
 
 

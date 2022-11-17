@@ -4,7 +4,7 @@ Invoke-Expression .\clear_display.ps1
 
 
 #-----------------------------------------------------------------------------
-# Definición en variables de los argumentos pasados
+# Definición en variable la suma de los argumentos pasados 
 $script:suma = $Args[0] + $Args[1] + $Args[2]
 
 

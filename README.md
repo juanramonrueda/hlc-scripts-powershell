@@ -2,11 +2,11 @@
 
 ## Ejercicios de scripts de PowerShell del módulo de Horas de Libre Configuración
 
-Iniciaremos creando un script al que llamaremos en todos los scripts restantes para hacer limpieza de pantalla usando el cmdlet **Clear-Host**. Normalmente la buena práctica es almacenar las instrucciones de cada script en funciones para agrupar y tener los elementos de cada script separados según su uso dentro del script.
+Iniciaremos creando dos scripts a los que llamaremos según la necesidad de los scripts que tengamos que hacer, los dos serán **clear_display.ps1** y **create_directory.ps1**. Los creamos por separado y los llamamos para no tener líneas de código repetidas en los scripts que las requieran, algo que no es muy vistoso y tampoco es una buena práctica siempre y cuándo podamos evitarla.
 
-### Script clear_display.ps1
+### clear_display.ps1
 
-Este script nos servirá para que tras llamar al script y justamente al inicio limpie la pantalla para que veamos los resultados de la ejecución de cada script.
+Este script nos servirá para que tras llamar al script y justamente al inicio limpie la pantalla para que veamos los resultados de la ejecución de los scripts que necesiten limpiar la pantalla para mostrar un resultado por ella y que se vea correctamente.
 
 #### Contenido del script
 
@@ -40,6 +40,35 @@ if ($MyInvocation.InvocationName -ne '&') {
 
 El boque de código llamará a la función, siempre que el nombre del script (**$MyInvocation.InvocationName**) no sea igual (**-ne**) al símbolo ampersand (**&**), hacemos esta condición ya que es muy poco probable que un script se llame de esta forma, por lo que llamará a la función que hemos definido sin algún problema.
 
+### create_directory.ps1
+
+Este script nos servirá para varios scripts más adelante para comprobar si un directorio existe para la ejecución de los scripts y guardar en dicho directorio las pruebas de los scripts y los resultados finales de cada ejecución de script que genere un archivo.
+
+#### Contenido del script
+
+```powershell
+$global:dir_path = "C:\pruebas_scripts"
+
+
+function main_create_directory {
+    if (Test-Path $dir_path) {
+        Write-Host 'El directorio' $dir_path "esta creado"
+    }
+    
+    else {
+        New-Item -Path $dir_path -ItemType Directory
+        Write-Host 'Se ha creado el directorio' $dir_path
+    }
+}
+
+if ($MyInvocation.InvocationName -ne '&') {
+    main_create_directory
+}
+```
+
+En algunos scripts concretos tendremos que llamar a este script para comprobar si existe el directorio **C:\pruebas_scripts** usando **Test-Path $dir_path** y en caso de que no exista lo crearemos con **New-Item**. Como la variable **$dir_path** la usaremos en otros scripts y para no tenerla repetida en cada uno de los scripts que la necesiten, haremos que tenga el scope **global**, que nos permite establecer dicha variable para usarla en distintos scripts siempre y cuando se llame al script, como si hubiesemos creado dicha variable en el sistema operativo y pudiesemos usarla cuando quisieramos, solo que se queda en este entorno de ejecución.
+
+Más información sobre los ámbitos o scopes --> [Ámbitos / Scopes](https://learn.microsoft.com/es-es/powershell/module/microsoft.powershell.core/about/about_scopes?view=powershell-7.3)
 
 ### script_1.ps1
 
@@ -110,9 +139,9 @@ if ($MyInvocation.InvocationName -ne '&') {
 }
 ```
 
-Estableceremos la lista o array **$month_name** con los nombres de los meses de forma ordenada para luego hacer sin complicaciones la comparación. Tendremos que definir la variable como **$script:month_name** para que las funciones puedan usar la variable que se encuentra fuera. De esta forma hacemos que la variable "suba" de nivel en la jerarquía. A esta forma de definir variables se le llama **Scope** y hay varios tipos de scope como **script**, **global** y **local**.
+Estableceremos la lista o array **$month_name** con los nombres de los meses de forma ordenada para luego hacer sin complicaciones la comparación. Tendremos que definir la variable usando el scope **script** para que las funciones puedan usar la variable que se encuentra fuera. De esta forma hacemos que la variable "suba" de nivel en la jerarquía y se pueda usar dentro de las funciones del script.
 
-Una vez hayamos completado la lista o array, crearemos la función **read_month_number** para pedir un número del 1 al 12 usando **Read-Host**, guardaremos el resultado en la variable **$month_number** a la que tendremos que hacer que tenga el mismo **Scope** que la variable **$month_name** para que pueda usarse en la siguiente función.
+Una vez hayamos completado la lista o array, crearemos la función **read_month_number** para pedir un número del 1 al 12 usando **Read-Host**, guardaremos el resultado en la variable **$month_number** a la que tendremos que hacer que tenga el mismo **scope** que la variable **$month_name** para que pueda usarse en la siguiente función.
 
 La función principal **main_s_2** llamará a la función **read_month_number** y comparará el valor de la variable **$month_number** usando la estructura **Switch**. Esta estructura nos permite establecer una lista de comparación que se recorrerá para buscar el valor establecido en ella.
 
@@ -457,39 +486,157 @@ if ($MyInvocation.InvocationName -ne '&') {
 
 Crearemos la función **ask_for_number** de la misma forma que hemos hecho en scripts anteriores, tendremos que usar el scope **script** para la variable.
 
-Crearemos la función
+Crearemos la función principal que llamará a la función **ask_for_number** y tendrá un for que recorrerá desde el número 1 hasta el número 10, de forma que multiplicaremos la iteración del bucle con el número que introduzca el usuario. Mostraremos el resultado de forma vistosa para que muestre la variable de la iteración el número y el resultado.
 
 ### script_8.ps1
 
-C
+Con este script tendremos que preguntar al usuario por una palabra y tenemos que localizar la primera vocal de esa palabra y la posición que tiene en esa palabra.
 
 #### Contenido del script
 
-C
+```powershell
+Invoke-Expression .\clear_display.ps1
+
+$script:contador_posicion = 0
+
+function ask_for_word {
+    $script:palabra = Read-Host 'Introduzca una palabra para saber cual es la primera vocal y su posicion'
+
+    $script:cantidad = $palabra.Length
+}
+
+function main_s_8 {
+    ask_for_word
+
+    for ($inicio = 0; $inicio -le $cantidad; $inicio++) {
+    
+        $contador_posicion = $contador_posicion + 1
+        
+        $letra = $palabra.Substring($inicio,1)
+        
+        if (($letra -eq 'a') -or ($letra -eq 'e') -or ($letra -eq 'i') -or ($letra -eq 'o') -or ($letra -eq 'u')) {
+            Write-Host 'La primera vocal de la palabra' $palabra 'es la' $letra 'y su posicion es la' $contador_posicion
+            break
+        }
+    }
+}
+
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_8
+}
+```
+
+Crearemos una variable, **$contador_posicion**, para contar la posición de las letras y la inicializaremos a 0, tendrá que tener el scope **script** para que se pueda usar en funciones. Crearemos una función para preguntar por una palabra y además, crearemos una variable que almacenará la cantidad de caracteres que tiene la palabra usando **LENGTH**.
+
+```powershell
+function main_s_8 {
+    ask_for_word
+
+    for ($inicio = 0; $inicio -le $cantidad; $inicio++) {
+    
+        $contador_posicion = $contador_posicion + 1
+        
+        $letra = $palabra.Substring($inicio,1)
+        
+        if (($letra -eq 'a') -or ($letra -eq 'e') -or ($letra -eq 'i') -or ($letra -eq 'o') -or ($letra -eq 'u')) {
+            Write-Host 'La primera vocal de la palabra' $palabra 'es la' $letra 'y su posicion es la' $contador_posicion
+            break
+        }
+    }
+}
+```
+
+Por último, crearemos la función principal que llamará a la función **ask_for_word**. Como tenemos que recorrer la palabra para saber dónde está la primera vocal, usaremos la estructura **FOR** para usar **SUBSTRING** dentro del bucle y poder obtener la primera vocal. Iniciaremos el bucle a 0 y haremos que llegue hasta la cantidad total de letras que tiene la palabra.
+
+```powershell
+$contador_posicion = $contador_posicion + 1
+        
+$letra = $palabra.Substring($inicio,1)
+
+```
+
+Dentro del bucle tenemos que actualizar la variable **$contador_posicion** que la tenemos inicializada a 0, por lo que en cuando empiece la iteración, la variable tendrá el valor 1. Crearemos una variable nueva, **$letra** que almacenará una letra de la palabra introducida según la iteración del bucle usando **SUBSTRING**. Con **SUBSTRING** le damos como primer parámetro la posición de la letra que queremos obtener y el segundo parámetro la cantidad de letras que queremos obtener, en este caso 1.
+
+Si introducimos la palabra *Prueba*, usando la estructura anterior, la primera iteración del bucle tendrá en la variable **$inicio** el valor 0, teniendo **palabra.substring(0,1)**, en la variable **$letra** almacenará la letra **P**, después en la segunda iteración, la variable **$inicio** tendrá el valor 1 y será **palabra.substring(1,1)** de forma que en la variable **$letra** almcenará la letra **r**.
+
+De esta forma irá sacando letra a letra de la palabra introducida, necesitaremos usar **IF** para comparar la letra que hay en la variable con alguna de las vocales que tenemos.
+
+```powershell
+if (($letra -eq 'a') -or ($letra -eq 'e') -or ($letra -eq 'i') -or ($letra -eq 'o') -or ($letra -eq 'u')) {
+            Write-Host 'La primera vocal de la palabra' $palabra 'es la' $letra 'y su posicion es la' $contador_posicion
+            break
+}
+```
+
+En cada letra de la palabra iremos comprobando que sea una vocal o una consonante, usaremos dentro del **IF** el **OR** para que si se da al menos una de las condiciones establecidas en el **IF**, entre dentro del **IF** y mostraremos la vocal que hay en **$letra** y la posición de la vocal usando la variable **$contador_palabra**. Usaremos **BREAK** para finalizar el bucle **FOR** después de mostrar el mensaje.
 
 ### script_9.ps1
 
-C
+Crearemos un script para almacenar en un fichero la lista de comandos que tiene PowerShell que empiecen por **SET**. No mostraremos nada por pantalla, por lo que no tendremos que hacer uso del script **clear_display.ps1**, en cambio, tendremos que llamar al script **create_directory.ps1** para comprobar si el directorio que hemos establecido en ese script está creado o hay que crearlo.
 
 #### Contenido del script
 
-C
+```powershell
+$script:file = "fichero_script_9.txt"
+
+function main_s_9 {
+    Invoke-Expression .\create_directory.ps1
+
+    Get-Command -verb set | Select-Object -Property Name > $dir_path\$file
+}
+
+If ($MyInvocation.InvocationName -ne '&') {
+    main_s_9
+}
+```
+
+Estableceremos una variable que nos servirá para crear un fichero o archivo con el nombre que contiene la variable, necesitaremos que tenga el scope **script**. 
+
+Crearemos la función principal y llamaremos al script **create_directory.ps1** mediante **Invoke-Expression** para comprobar si tenemos el directorio creado o no y en caso de que no esté creado, crearlo. Usaremos el cmdlet **Get-Command** con el modificador **-Verb** para indicar que queremos que nos muestre los cmdlet que empiezan por **SET**, después pasaremos por **tubería** o **pipe** al cmdlet **Select-Object** para seleccionar lo que queremos que nos muestre **Get-Command**, en este caso queremos que nos muestre únicamente la columna **Nombre**, por lo que usaremos el modificador **-Property** junto a Name y mediante una redirección destructiva **>** pasamos la instrucción a la ruta que tenemos guardada en la variable **$dir_path** que creamos en el script **create_directory.ps1** y el fichero que hemos establecido mediante variable para crear el archivo o fichero y machacar el contenido que tuviese si estaba creado anteriormente.
 
 ### script_10.ps1
 
-C
+De igual forma que hicimos en el script anterior, tenemos que crear un script para almacenar los comandos que tengan el nombre **Process** en un fichero.
 
 #### Contenido del script
 
-C
+```powershell
+$script:file = "fichero_script_10.txt"
+
+function main_s_10 {
+    Invoke-Expression .\create_directory.ps1
+
+    Get-Command -Name *-Process* | Select-Object -Property Name > $dir_path\$file
+}
+
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_10
+}
+```
+
+Podemos reciclar la estructura del script anterior, salvo el comando de la función principal, usaremos de nuevo el cmdlet **Get-Command** con el modificador **-Name** y usaremos comodines para este script, el **asterísco \*** nos sirve para uno o varios caracteres y como nos interesa los que empiezan por **Process**, tenemos que usar \*-Process\*.
 
 ### script_11.ps1
 
-C
+En este siguiente script obtendremos en un fichero las variables del sistemas y su contenido, este script principalmente es para ejecutarlo en un **Windows Server**, y se puede ejecutar en cualquier Windows.
 
 #### Contenido del script
 
-C
+```powershell
+$script:file = "fichero_script_11.txt"
+
+function main_s_11 {
+    Invoke-Expression .\create_directory.ps1
+
+    Get-ChildItem Env: > $dir_path\$file
+}
+
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_11
+}
+```
+
+Como la estructura es igual que en los dos script anteriores, pasaremos al comando que nos permite obtener las variables del sistema junto a su contenido. Useremos el cmdlet **Get-ChildItem** para listar las variables usando **Env:** para mostrar las variables y pasarlas mediante redirección destructiva a la ruta y fichero establecidos.
 
 ### script_12.ps1
 
@@ -498,27 +645,12 @@ Con este script crearemos un fichero o archivo que contendrá el nombre de todos
 #### Contenido del script
 
 ```powershell
-$script:dir_path = "C:\pruebas_scripts"
-
 $script:file = "fichero_script_12.txt"
 
-function list_disk_c {
-    Get-ChildItem -Name -Path C:\*.txt >  $dir_path\$file
-}
-
 function main_s_12 {
-    Invoke-Expression .\clear_display.ps1
+    Invoke-Expression .\create_directory.ps1
 
-    if (Test-Path $dir_path) {
-        Write-Host 'El directorio' $dir_path "esta creado"
-    }
-    
-    else {
-        New-Item -Path $dir_path -ItemType Directory
-        Write-Host 'Se ha creado el directorio' $dir_path
-    }
-
-    list_disk_c
+    Get-ChildItem -Name -Path $list_dir >  $dir_path\$file
 }
 
 if ($MyInvocation.InvocationName -ne '&') {
@@ -526,44 +658,264 @@ if ($MyInvocation.InvocationName -ne '&') {
 }
 ```
 
-Empezaremos el script estableciendo dos variables que nos 
+Como tenemos que pasar a un fichero el listado de ficheros con la extensión **.txt** que hay en la raíz del usuario. Crearemos un par de ficheros con dicha extensión para realizar la prueba del script.
+
+Crearemos una variable, **$list_dir** que contendrá la ruta del directorio y usaremos **\*.txt** para mostrar cualquier fichero que tenga la extensión **.txt**, usaremos el cmdlet **Get-ChildItem** para listar el contenido con el modificador **-Name** para mostrar únicamente los nombres de los archivos y **-Path** para usar la variable **$list_dir** y pasar la salida de pantalla al fichero mediante redirección destructiva.
 
 ### script_13.ps1
 
-C
+Este script servirá para mostrar todos los ficheros ejecutables que tengan la extensión **.exe** y **.com**, con su nombre, tamaño y si son de son de solo lectura. Como no tenemos que pasar el contenido a un fichero, tendremos que limpiar la pantalla antes de mostrar los resultados.
 
 #### Contenido del script
 
-C
+```powershell
+$script:execute_files = 'C:\Windows\System32\*'
+
+$script:files_extensions = '*.exe', '*.com'
+
+function main_s_13 {
+    Invoke-Expression .\clear_display.ps1
+
+    Get-ChildItem -Path $execute_files -Include ($files_extensions) | Select-Object Name,Mode,Length
+}
+
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_13
+}
+```
+
+Inicializaremos dos variables que contendrán la ruta de ejecución, **$execute_files** y las extensiones, **$files_extensions** para listar todos los archivos que son ejecutables.
+
+Es un script bastante simple, crearemos la función principal y llamaremos al script de limpieza de pantalla mediante **Invoke-Expression**, de nuevo usaremos el cmdlet **Get-ChildItem** con el modificador **-Path $execute_files** estableceremos la ruta de ejecución del cmdlet y con **-Include ($files_extensions**) buscaremos por las extensiones que tenemos definidas en la variable. Pasaremos el resultado mediante **tubería** o **pipe** a **Select-Object** para que nos muestre únicamente las propiedades **Name** (nombre), **Mode** (atributos) y **Length** (tamaño).
 
 ### script_14.ps1
 
-C
+Tenemos que realizar un script que liste en una tabla la cantidad de archivos que hay de cada extensión y ordenados por esta misma, tenemos que tener en cuenta que si no se recibe argumento, la salida será por pantalla, en caso de recibir un argumento, tendremos que pasar la salida a un fichero con el mismo nombre que el argumento pasado y la extensión **.txt**.
 
 #### Contenido del script
 
-C
+```powershell
+$script:parametro1=$Args[0]
+
+$script:dir_path = "C:\pruebas_scripts"
+
+function list_windows_group_extension {
+    Get-ChildItem -Path C:\Windows\System32 | Group-Object -Property Extension | Select-Object Count,Name | Sort-Object -Property Name | Format-Table
+}
+
+function main_s_14 {
+    Invoke-Expression .\clear_display.ps1
+
+    if ($null -eq $parametro1) {
+        list_windows_group_extension
+    }
+    
+    else {
+        Invoke-Expression .\create_directory.ps1
+    
+        list_windows_group_extension > $dir_path\$parametro1.txt
+    }
+}
+
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_14
+}
+```
+
+Este script es algo complejo por el hecho de que necesitamos hacer algún tipo de referencia de que el argumento pasado es nulo, que no tiene valor almacenado. Almacenaremos en una variable la primera posición de los argumentos y crearemos otra variable para establecer la ruta en la que listaremos.
+
+Crearemos la función **list_windows_group_extension** que nos listará todos los archivos agrupados por extensión y con formato de tabla. Para listar los archivos, tenemos que usar el cmdlet **Get-ChildItem**, después pasaremos mediante **pipe** el resultado a **Group-Object** que nos permitirá agrupar por extensión de archivo usando **-Property Extension**, después volveremos a usar un **pipe** para pasar el resultado a **Select-Object** para mostrar únicamente la cantidad de archivos con esa extensión (**Count**) y el nombre de extensión (**Name**), de nuevo usaremos un **pipe** para pasar el resultado a **Sort-Object** que nos permitirá ordenar por extensión usando **-Property Name** y finalmente usaremos otro **pipe** para pasar todo a **Format-Table** y le formato de tabla.
+
+```powershell
+if ($null -eq $parametro1) {
+    list_windows_group_extension
+}
+```
+
+Para que haga salida por pantalla sin pasar argumentos, necesitaremos usar **IF** con la condición **$null -eq $parametro1**. Esta condición nos permitirá comprobar si la variable donde almacenamos el primer argumento tiene un valor o no, usaremos la variable **$null** que no contiene valor y haremos una comparación de igualdad con la variable **$parametro1**.
+
+En caso de no tener valor **$parametro1**, realizará la salida por pantalla, en caso contrario creará un directorio y usaremos la redirección destructiva con la función que tiene el comando para realizar el listado de agrupación por extensión y generar un archivo con el nombre de la variable **$parametro1** y guardar en dicho archivo el comando de listado.
 
 ### script_15.ps1
 
-C
+Como hicimos con el script anterior, tendremos que listar en tres columnas los archivos de C:\Windows y subdirectorios que tengan más de 2MB de tamaño y su tiempo de acceso sea en los últimos 7 días, si se pasa un argumento, generará un archivo con el nombre del argumento, en caso contrario realizará la salida por pantalla.
 
 #### Contenido del script
 
-C
+```powershell
+$script:parametro1=$Args[0]
+
+$script:list_dir_path_recursive = 'C:\Windows'
+
+function min_length_max_lastAccessTime {
+    Get-ChildItem -Path $list_dir_path_recursive -Recurse -Force | Where-Object {($_.Length -gt 2MB) -and ($_.LastAccessTime -lt (Get-Date).AddDays(-7))} | Select-Object Name | Format-Wide -Column 3
+}
+
+function main_s_15 {
+    Invoke-Expression .\clear_display.ps1
+
+    Invoke-Expression .\create_directory.ps1
+
+    if ($null -eq $parametro1) {
+        min_length_max_lastAccessTime
+    }
+    
+    else {
+        min_length_max_lastAccessTime > $dir_path\$parametro1.txt
+    }
+}
+
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_15
+}
+```
+
+Usaremos gran parte de la estructura del script anterior, de forma que tenemos que crear una variable más en la que estableceremos la ruta en la que listaremos los archivos que necesitamos para el script. Tenemos que tener en cuenta que vamos a usar los dos scripts que hemos creado al principio y debemos hacer un buen uso del orden de ejecución ya que los scripts son secuenciales, leen el código de arriba hacia abajo y si hubiesemos cambiado el orden de **Invoke-Expression .\clear_display.ps1** e **Invoke-Expression .\create_directory.ps1**, habríamos borrado el mensaje del script **create_directory.ps1**.
+
+```powershell
+function min_length_max_lastAccessTime {
+    Get-ChildItem -Path $list_dir_path_recursive -Recurse -Force | Where-Object {($_.Length -gt 2MB) -and ($_.LastAccessTime -lt (Get-Date).AddDays(-7))} | Select-Object Name | Format-Wide -Column 3
+}
+```
+
+Para listar contenido usaremos **Get-ChildItem**, necesitaremos usar los modificadores **-Path**, **-Recurse** y **-Force**, el segundo modificador nos permite buscar en los subdirectorios de la ruta y con el tercer modificador forzamos a que nos muestre más resultados ya que nos darán algunos errores y sin **-Force** apenas tendremos resultados. Después pasaremos los resultados mediante **pipe** a **Where-Object** que nos permite filtrar por los parámetros que nosotros queremos, para el tamaño de los archivos necesitaremos **Length** y para el último tiempo de acceso necesitaremos **LastAccessTime**. Para hacer la comparación, tenemos que usar **curly brackets {}** que contendrán la comparación completa y **round brackets ()** para separar individualmente las comparaciones.
+
+```powershell
+Where-Object {($_.Length -gt 2MB) -and ($_.LastAccessTime -lt (Get-Date).AddDays(-7))}
+```
+
+Empezaremos primero por el tamaño, **Length**, tenemos que usar **$_.Length** para hacer referencia al tamaño y con **$_.Length -gt 2MB** hacemos referencia a los archivos que tengan un tamaño superior a 2MB. Después tendremos que realizar un apaño para que nos muestre los archivos que tengan un tiempo de acceso menor a 7 días. Para ello, usaremos la fecha actual con **Get-Date** y restaremos 7 días usando **AddDays(-7)** y tendremos que hacer que **$_.LastAccessTime** sea menor que los 7 días que hemos restado de la fecha actual.
+
+Una vez tengamos la comparación, pasaremos el resultado del listado, **Get-ChildItem** y el filtrado, **Where-Object**, a **Select-Object** para mostrar únicamente los nombres de los archivos que cumplan con las características requeridas y después pasamos el resultado a **Format-Wide** que nos permite formatear la salida en tres columnas usando el modificador **-Column**.
 
 ### script_16.ps1
 
-C
+Este script nos servirá para listar los procesos que están en ejecución en la máquina ordenados de forma descendente por el uso de CPU y en vez de sacar los resultados por pantalla, lo haremos a un archivo con formato CSV.
+
+Más info del formato CSV --> [Formato CSV](https://www.geeknetic.es/Archivo-CSV/que-es-y-para-que-sirve)
 
 #### Contenido del script
 
-C
+```powershell
+$script:file = "fichero_script_16.csv"
+
+function main_s_16 {
+    Invoke-Expression .\create_directory.ps1
+
+    Get-Process | Sort-Object -Property CPU -Descending | Export-Csv -Path $dir_path\$file -Delimiter ';'
+}
+
+if ($MyInvocation.InvocationName -ne '&') {
+    main_s_16
+}
+```
+
+Tenemos que listar los procesos en ejecución por orden de uso de CPU de forma descendente y pasar la salida a un fichero o archivo, necesitaremos establecer una variable que contendrá el nombre del archivo con formato **.csv** hacer uso del script **create_directory.ps1** dentro de la función principal realizaremos la instrucción para ejecutar este script y que cumpla con los requisitos pedidos.
+
+```powershell
+Get-Process | Sort-Object -Property CPU -Descending | Export-Csv -Path $dir_path\$file -Delimiter ';'
+```
+
+Para listar los procesos en ejecución, tenemos que usar el cmdlet **Get-Process** que pasaremos mediante **pipe** a **Sort-Object** y haremos la ordenación mediante el campo **CPU** y el modificador **-Descending**, después el resultado lo volveremos a pasar mediante **pipe** al cmdlet **Export-Csv** indicando el Path mediante variables y usaremos el modificador **-Delimiter** que separará los campos usando el símbolo o signo de puntuación que queramos, en mi caso usaré el **semicolon** o **punto y coma**.
 
 ### script_17.ps1
 
-C
+Para finalizar con los scripts, tendremos que crear un script que pase la siguiente información a un fichero:
+    
+    a) Fecha y hora del sistema
+    b) Nombre y apellidos
+    c) Variables del sistema
+    d) Procesos en ejecución
+    e) Usuarios conectados en el sistema
+    f) Información de configuración de la red ip, mask, interfaces
+    g) Información de la tabla de enrutado
 
 #### Contenido del script
 
-C
+```powershell
+$script:file = "fichero_script_17.txt"
+
+function show_date_hour {
+    Get-Date
+}
+
+function first_last_name {
+    $first_name = "Juan Ramon"
+
+    $last_name = "Rueda Lao"
+
+    $full_name = "$first_name $last_name"
+
+    $full_name
+}
+
+function system_variables {
+    Get-ChildItem Env:
+}
+
+function get_active_processes {
+    Get-Process
+}
+
+function get_users_connected {
+    Get-RDUserSession
+}
+
+function net_information {
+    Get-NetIPConfiguration
+}
+
+function routing_table {
+    Get-NetRoute
+}
+
+function main_s_17 {
+    show_date_hour
+
+    first_last_name
+
+    system_variables
+
+    get_active_processes
+
+    get_users_connected
+
+    net_information
+
+    routing_table
+}
+
+if ($MyInvocation.InvocationName -ne '&') {
+    Invoke-Expression .\create_directory.ps1
+
+    main_s_17 > $dir_path\$file
+}
+```
+
+Este script, más que complicado, es largo y sencillo y como nos piden cosas distintas, es el ejemplo perfecto sobre el uso de funciones dentro del mismo para separar distintas instrucciones de las demás ya que hacen cosas distintas independientemente del cmdlet usado.
+
+Estableceremos la variable con el nombre del archivo para crear el archivo que contendrá toda la información pedida y un par de variables más con nuestro nombre y apellidos. Empezaremos con la función **show_date_hour** que nos servirá para mostrar tanto la hora como la fecha actual.
+
+La función **first_last_name** mostrará tanto el nombre como los apellidos, en este caso míos mediante uso de variables. Crearemos dentro de la función una variable **$full_name** que usará las dos que hemos establecido al principio del script, **$first_name** y **$last_name**, tenemos que tener en cuenta que para concatenar las dos variables y que dejen un espacio en medio, las tenemos que "contener" dentro de **quotations marks** o **comillas** para que realice correctamente la concatenación de ambas variables. Después, haremos referencia a la variable **$full_name**.
+
+La tercera función es una que hemos usado, listaremos las variables del sistema y su contenido.
+
+Con la cuarta función pasa lo mismo, hemos usado el cmdlet **Get-Process** para listar los procesos en ejecución.
+
+La quinta función es algo problemática ya que no la podemos usar en los clientes Windows, ya que su principal cometido es de informar de los usuarios que han establecido sesiones remotas en el servidor. El cmdlet a usar el **Get-RDUserSession**.
+
+La sexta función nos permite listar la configuración de red de nuestro equipo usando el cmdlet Get-NetIPConfiguration.
+
+La séptima función nos mostrará la tabla de rutas de nuestro equipo mediante el cmdlet **Get-NetRoute**.
+
+Todas las funciones anteriores las juntaremos en una función principal que será la que llame a las demás.
+
+```powershell
+if ($MyInvocation.InvocationName -ne '&') {
+    Invoke-Expression .\create_directory.ps1
+
+    main_s_17 > $dir_path\$file
+}
+```
+
+Este script es especial ya que usaremos nuestra estructura de llamada para invocar al script **create_directory.ps1** y que la función principal, **main_s_17**, haga la redirección destructiva de la ejecución de los scripts para crear el archivo o machacar su contenido si ya existía antes el archivo.
