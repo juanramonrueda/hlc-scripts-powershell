@@ -8,8 +8,17 @@ Invoke-Expression .\clear_display.ps1
 function ask_numbers {
     $script:numero_1 = Read-Host 'Introduzca el primer numero'
 
+    while ($script:numero_1 -isnot [int]) {
+        [int]$script:numero_1 = Read-Host 'Introduzca de nuevo el primer numero'
+    }
+
     $script:numero_2 = Read-Host 'Introduzca el segundo numero'
+
+    while ($script:numero_2 -isnot [int]) {
+        [int]$script:numero_2 = Read-Host 'Introduzca de nuevo el segundo numero'
+    }
 }
+
 
 
 #-----------------------------------------------------------------------------------
