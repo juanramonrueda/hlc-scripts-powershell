@@ -4,6 +4,8 @@ $script:dir_path = "C:\pruebas_scripts"
 
 $script:file = "fichero_script_12.txt"
 
+$script:list_dir = C:\*.txt
+
 
 #-------------------------------------------------------------------------------------------------
 # Se obtienen los nombres de los ficheros .txt que hay en la raíz del sistema operativo
@@ -24,7 +26,7 @@ function create_directory {
 function main_s_12 {
     create_directory
 
-    Get-ChildItem -Name -Path C:\*.txt >  $dir_path\$file
+    Get-ChildItem -Name -Path $list_dir >  $dir_path\$file
 }
 
 
