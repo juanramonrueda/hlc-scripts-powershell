@@ -14,7 +14,7 @@ function ask_numbers {
 
     [int]$script:numero_2 = Read-Host 'Introduzca el segundo numero'
 
-    while ($script:numero_2 -isnot [int]) {
+    while ($numero_2 -isnot [int]) {
         [int]$script:numero_2 = Read-Host 'Introduzca de nuevo el segundo numero'
     }
 }
