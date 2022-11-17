@@ -7,16 +7,7 @@ $script:file = "fichero_script_11.txt"
 
 #---------------------------------------------------------------------------------------------------
 # Se muestran las variables del sistema
-function system_vars {
-    Get-ChildItem Env: > $dir_path\$file
-}
-
-
-#---------------------------------------------------------------------------------------------------
-# Creación de un directorio para almacenar los archivos relacionados con los scripts si no existe
-function main_s_11 {
-    Invoke-Expression .\clear_display.ps1
-
+function create_directory {
     if (Test-Path $dir_path) {
         Write-Host 'El directorio' $dir_path "esta creado"
     }
@@ -25,8 +16,15 @@ function main_s_11 {
         New-Item -Path $dir_path -ItemType Directory
         Write-Host 'Se ha creado el directorio' $dir_path
     }
+}
 
-    system_vars
+
+#---------------------------------------------------------------------------------------------------
+# Creación de un directorio para almacenar los archivos relacionados con los scripts si no existe
+function main_s_11 {
+    create_directory
+
+    Get-ChildItem Env: > $dir_path\$file
 }
 
 
