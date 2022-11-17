@@ -1,6 +1,6 @@
 #--------------------------------------------------------------------------------------------------------------
 # Definición de variables
-$script:execute_files = C:\Windows\System32\*
+$script:execute_files = 'C:\Windows\System32\*'
 
 $script:files_extension = '*.exe', '*.com'
 
