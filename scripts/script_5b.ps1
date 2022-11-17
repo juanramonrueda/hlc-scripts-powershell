@@ -14,11 +14,11 @@ $script:variable_2 = $Args[1]
 # Comparación de los argumentos pasados para comparar qué número es mayor
 function main_s_5b {
     
-    if ($variable_1 -isnot [int]) {
+    if (($variable_1 -isnot [int]) -and ($variable_2 -is [int])) {
         $resultado = 'El primer argumento pasado es una cadena de texto o contiene letras' 
     }
     
-    elseif ($variable_2 -isnot [int]) {
+    elseif (($variable_2 -isnot [int]) -and ($variable_1 -is [int])) {
         $resultado = 'El segundo argumento pasado es una cadena de texto o contiene letras'
     }
 
