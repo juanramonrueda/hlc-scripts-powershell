@@ -1,4 +1,4 @@
-# scripts-powershell-hlc
+# hlc-scripts-powershell
 
 ## Ejercicios de scripts de PowerShell del módulo de Horas de Libre Configuración
 
